@@ -1,0 +1,36 @@
+# Player Tracking Pipeline Configuration
+# Override paths in Colab after mounting Google Drive if needed.
+
+paths:
+  video_dir: "C:/Users/UBANDG1/Videos/SportsVideos"
+  output_dir: "outputs"
+
+models:
+  yolo:
+    model_name: "yolo11n.pt"   # Options: yolo11n, yolo11s, yolo11m (n=fastest)
+    confidence: 0.4
+    iou: 0.5
+    person_class_id: 0         # COCO class 0 = person
+
+  openpose:
+    device: "auto"             # auto, cuda, or cpu
+    include_hands: false
+    include_face: false
+
+  tracking:
+    tracker: "bytetrack.yaml"  # Built-in Ultralytics tracker config
+    persist: true
+
+processing:
+  max_frames: null             # null = process entire video; set e.g. 100 for quick tests
+  save_video: true
+  save_json: true
+  show_preview: false
+
+visualization:
+  bbox_color: [0, 255, 0]
+  keypoint_color: [0, 0, 255]
+  skeleton_color: [255, 128, 0]
+  track_id_color: [255, 255, 0]
+  line_thickness: 2
+  keypoint_radius: 4
