@@ -24,7 +24,7 @@ The 6 sports video clips are **not** stored in this repository (to keep the repo
 
 Download them from Google Drive:
 
-**[Sports Videos — Google Drive](YOUR_GOOGLE_DRIVE_LINK_HERE)**
+**[Sports Videos — Google Drive](https://drive.google.com/drive/folders/1TlAWBimU3OzeouoGqYtNQ_4c3YLtDIo8?usp=sharing)**
 
 After downloading, place the `.mkv` files in a local folder, for example:
 
@@ -123,7 +123,7 @@ Results are written under `outputs/<video_name>/`:
 
 ## Run in Google Colab
 
-1. Open [`notebooks/player_tracking_colab.ipynb`](notebooks/player_tracking_colab.ipynb) in Colab.
+1. Open [`notebooks/player_tracking_colab.ipynb`](https://colab.research.google.com/drive/1qcJ1WWD3xkT9IG3Q3YnmRWIOgfIxPSB2?usp=sharing) in Colab.
 2. Upload this project to Google Drive (or clone from GitHub into Drive).
 3. Download the 6 videos from the Google Drive link above into a Drive folder (e.g. `MyDrive/SportsVideos/`).
 4. In **Part 1** of the notebook, update:
