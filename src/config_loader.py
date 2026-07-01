@@ -9,16 +9,21 @@ import yaml
 
 
 DEFAULT_CONFIG_PATH = Path(__file__).parent.parent / "config" / "config.yaml"
+PROJECT_ROOT = DEFAULT_CONFIG_PATH.parent.parent
 
 
 def load_config(config_path: str | Path | None = None) -> dict[str, Any]:
-    """Load YAML config and resolve common paths."""
+    """Load YAML config and resolve paths relative to the project root."""
     path = Path(config_path) if config_path else DEFAULT_CONFIG_PATH
     with path.open("r", encoding="utf-8") as file:
         config = yaml.safe_load(file)
 
-    config["paths"]["video_dir"] = str(Path(config["paths"]["video_dir"]))
-    config["paths"]["output_dir"] = str(Path(config["paths"]["output_dir"]))
+    for key in ("video_dir", "output_dir"):
+        resolved = Path(config["paths"][key])
+        if not resolved.is_absolute():
+            resolved = PROJECT_ROOT / resolved
+        config["paths"][key] = str(resolved)
+
     return config
 
 

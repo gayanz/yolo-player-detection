@@ -2,7 +2,7 @@
 # Override paths in Colab after mounting Google Drive if needed.
 
 paths:
-  video_dir: "C:/Users/UBANDG1/Videos/SportsVideos" # update this path to the path of the videos
+  video_dir: "SportsVideos"
   output_dir: "outputs"
 
 models:

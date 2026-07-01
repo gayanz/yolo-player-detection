@@ -26,36 +26,42 @@ Download them from Google Drive:
 
 **[Sports Videos — Google Drive](https://drive.google.com/drive/folders/1TlAWBimU3OzeouoGqYtNQ_4c3YLtDIo8?usp=sharing)**
 
-After downloading, place the `.mkv` files in a local folder, for example:
+After downloading, place the `.mkv` files in the project folder:
 
 ```
-data/videos/
-├── 2025-09-05 12-26-47.mkv
-├── 2025-09-05 12-31-04.mkv
-├── 2025-09-05 12-33-35.mkv
-├── 2025-09-05 12-45-55.mkv
-├── 2025-09-05 12-53-18.mkv
-└── 2025-09-05 12-56-43.mkv
+DS5216-PA2/
+└── SportsVideos/
+    ├── 2025-09-05 12-26-47.mkv
+    ├── 2025-09-05 12-31-04.mkv
+    ├── 2025-09-05 12-33-35.mkv
+    ├── 2025-09-05 12-45-55.mkv
+    ├── 2025-09-05 12-53-18.mkv
+    └── 2025-09-05 12-56-43.mkv
 ```
 
-Then point `video_dir` in `config/config.yaml` to that folder (see [Configuration](#configuration)).
+Default paths are already set in `config/config.yaml` (`SportsVideos/` and `outputs/`).
 
 ---
 
 ## Project Structure
 
 ```
-yolo-player-detection/
+DS5216-PA2/
 ├── config/
 │   └── config.yaml              # Paths, model settings, visualization
 ├── notebooks/
 │   └── player_tracking_colab.ipynb   # Google Colab notebook (all steps)
 ├── scripts/
 │   └── run_pipeline.py          # Run pipeline from command line
+├── SportsVideos/                # Input videos (download from Google Drive)
+├── outputs/                     # Generated results (not committed to git)
 ├── src/
 │   ├── config_loader.py
 │   ├── detection/
 │   │   └── yolo_detector.py     # YOLO v11 player detection
+│   ├── evaluation/
+│   │   ├── metrics.py           # Precision, recall, F1, accuracy
+│   │   └── yolo_eval.py         # Loss curves and COCO validation
 │   ├── keypoints/
 │   │   └── openpose_estimator.py # OpenPose keypoints
 │   ├── tracking/
@@ -66,7 +72,7 @@ yolo-player-detection/
 │       ├── video_utils.py
 │       └── visualization.py
 ├── requirements.txt
-└── outputs/                     # Generated results (not committed)
+└── README.md
 ```
 
 ---
@@ -88,12 +94,12 @@ pip install -r requirements.txt
 ## Run Locally
 
 1. Clone the repository and install dependencies (above).
-2. Download the videos from Google Drive into `data/videos/`.
-3. Update `config/config.yaml`:
+2. Download the videos from Google Drive into `SportsVideos/`.
+3. Run the pipeline (paths are already configured in `config/config.yaml`):
 
 ```yaml
 paths:
-  video_dir: "data/videos"
+  video_dir: "SportsVideos"
   output_dir: "outputs"
 ```
 
@@ -104,7 +110,7 @@ paths:
 python scripts/run_pipeline.py
 
 # Process one video
-python scripts/run_pipeline.py --video "data/videos/2025-09-05 12-26-47.mkv"
+python scripts/run_pipeline.py --video "SportsVideos/2025-09-05 12-26-47.mkv"
 
 # Quick test (first 50 frames only)
 python scripts/run_pipeline.py --max-frames 50
@@ -124,15 +130,15 @@ Results are written under `outputs/<video_name>/`:
 ## Run in Google Colab
 
 1. Open [`notebooks/player_tracking_colab.ipynb`](https://colab.research.google.com/drive/1qcJ1WWD3xkT9IG3Q3YnmRWIOgfIxPSB2?usp=sharing) in Colab.
-2. Upload this project to Google Drive (or clone from GitHub into Drive).
-3. Download the 6 videos from the Google Drive link above into a Drive folder (e.g. `MyDrive/SportsVideos/`).
-4. In **Part 1** of the notebook, update:
+2. Upload the full `DS5216-PA2` project folder to Google Drive (including `SportsVideos/` and `src/`).
+3. Download the 6 videos from the Google Drive link above into `DS5216-PA2/SportsVideos/` if not already there.
+4. In **Part 1**, set `PROJECT_ROOT` to your project location on Drive:
 
 ```python
-PROJECT_ROOT = '/content/drive/MyDrive/DS5216-PA2'      # project location
-config['paths']['video_dir'] = '/content/drive/MyDrive/SportsVideos'
-config['paths']['output_dir'] = '/content/drive/MyDrive/outputs'
+PROJECT_ROOT = '/content/drive/MyDrive/DS5216-PA2'
 ```
+
+Videos and outputs are read from inside the project folder automatically (`SportsVideos/` and `outputs/`).
 
 5. Run all cells top to bottom.
 
@@ -145,6 +151,7 @@ The notebook walks through each stage:
 | 3 | OpenPose keypoints (single player) |
 | 4 | ByteTrack tracking (30 frames) |
 | 5 | Full pipeline on all videos |
+| 6 | Evaluation metrics and loss curves |
 
 > **Note:** Enable a GPU runtime in Colab (`Runtime → Change runtime type → GPU`) for faster processing.
 

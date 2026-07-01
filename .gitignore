@@ -1,0 +1,25 @@
+# Generated outputs
+outputs/**
+!outputs/.gitkeep
+
+# Video files (download from Google Drive link in README)
+SportsVideos/*
+!SportsVideos/.gitkeep
+
+# Model weights downloaded at runtime
+*.pt
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Ultralytics training runs
+runs/
