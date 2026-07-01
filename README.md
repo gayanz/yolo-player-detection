@@ -45,7 +45,7 @@ Then point `video_dir` in `config/config.yaml` to that folder (see [Configuratio
 ## Project Structure
 
 ```
-DS5216-PA2/
+yolo-player-detection/
 ├── config/
 │   └── config.yaml              # Paths, model settings, visualization
 ├── notebooks/
